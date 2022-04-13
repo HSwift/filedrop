@@ -8,6 +8,7 @@ import (
 	"io"
 	"math/rand"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"time"
@@ -100,7 +101,7 @@ func downloadFile(filename string) {
 	defer stream.Close()
 	filenameEncoded := filename[7:]
 	filenameBytes, _ := base64.RawURLEncoding.DecodeString(filenameEncoded)
-	filename = string(filenameBytes)
+	filename = path.Base(string(filenameBytes))
 	fmt.Printf("downloading file %s\n", filename)
 	file, err := os.Create(filename)
 	if err != nil {
