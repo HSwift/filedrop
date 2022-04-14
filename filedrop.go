@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/studio-b12/gowebdav"
+	"golang.org/x/term"
 	"io"
 	"math/rand"
 	"os"
@@ -150,6 +151,7 @@ func makeConfig() {
 	fmt.Printf("username: ")
 	fmt.Scanln(&davConfig.Username)
 	fmt.Printf("password: ")
+	term.ReadPassword(int(os.Stdin.Fd()))
 	fmt.Scanln(&davConfig.Password)
 	configFile, _ := json.Marshal(davConfig)
 	err = os.WriteFile(filepath.Join(configDir, ".filedrop.json"), configFile, 0644)
