@@ -178,10 +178,11 @@ func main() {
 	if len(os.Args) == 2 {
 		if os.Args[1] == "config" {
 			makeConfig()
-		}
-		if os.Args[1] == "down" {
+		} else if os.Args[1] == "down" {
 			connectDav()
 			downloadLatestFile()
+		} else {
+			usage()
 		}
 		return
 	}
@@ -190,10 +191,11 @@ func main() {
 		if os.Args[1] == "up" {
 			connectDav()
 			uploadFile(os.Args[2])
-		}
-		if os.Args[1] == "down" {
+		} else if os.Args[1] == "down" {
 			connectDav()
 			downloadFileWithCode(os.Args[2])
+		} else {
+			usage()
 		}
 		return
 	}
