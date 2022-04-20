@@ -27,6 +27,12 @@ filedrop list
 ```
 列出filedrop目录内的所有文件，显示文件代码、上传日期和文件名。
 
+5. 清理文件
+```
+filedrop prune
+```
+清理filedrop目录内，上传日期超过24小时的文件。
+
 ## 可选的webdav服务
 ### 坚果云
 1. 注册一个[坚果云](https://www.jianguoyun.com/)帐号

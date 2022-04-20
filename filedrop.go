@@ -173,12 +173,23 @@ func list() {
 		fmt.Printf("%s\t%s\t%s\n", rawFilename[:6], uploadDate, filename)
 	}
 }
+func prune() {
+	pruneTime := time.Now().Add(-time.Hour * 24)
+	files, _ := c.ReadDir("/filedrop")
+	for _, file := range files {
+		if file.ModTime().Before(pruneTime) {
+			c.Remove("/filedrop/" + file.Name())
+			fmt.Printf("remove %s\n", file.Name()[:6])
+		}
+	}
+}
 
 func usage() {
 	println("usage:")
 	println(os.Args[0] + " up filename")
 	println(os.Args[0] + " down [code]")
 	println(os.Args[0] + " list")
+	println(os.Args[0] + " prune")
 	println(os.Args[0] + " config")
 }
 
@@ -198,6 +209,14 @@ func main() {
 		} else if os.Args[1] == "list" {
 			connectDav()
 			list()
+		} else if os.Args[1] == "prune" {
+			choice := ""
+			fmt.Printf("are you sure you want to remove files 24 hours ago? [y/N]")
+			fmt.Scanln(&choice)
+			if choice == "y" || choice == "Y" {
+				connectDav()
+				prune()
+			}
 		} else {
 			usage()
 		}
