@@ -21,6 +21,12 @@ filedrop down [code]
 ```
 给出code时，会下载code所代表的文件。省略code时，会下载最新上传的文件。文件名称为上传时的名称，当前目录若存在同名文件，会**导致覆盖**。
 
+4. 列出文件
+```
+filedrop list
+```
+列出filedrop目录内的所有文件，显示文件代码、上传日期和文件名。
+
 ## 可选的webdav服务
 ### 坚果云
 1. 注册一个[坚果云](https://www.jianguoyun.com/)帐号

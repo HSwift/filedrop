@@ -161,10 +161,24 @@ func makeConfig() {
 	fmt.Printf("saved at %s\n", filepath.Join(configDir, ".filedrop.json"))
 }
 
+func list() {
+	files, _ := c.ReadDir("/filedrop")
+	fmt.Printf("code\tdate\tfilename\n")
+	for _, file := range files {
+		rawFilename := file.Name()
+		filenameEncoded := rawFilename[7:]
+		filenameBytes, _ := base64.RawURLEncoding.DecodeString(filenameEncoded)
+		filename := path.Base(string(filenameBytes))
+		uploadDate := file.ModTime().Format("01/02")
+		fmt.Printf("%s\t%s\t%s\n", rawFilename[:6], uploadDate, filename)
+	}
+}
+
 func usage() {
 	println("usage:")
 	println(os.Args[0] + " up filename")
 	println(os.Args[0] + " down [code]")
+	println(os.Args[0] + " list")
 	println(os.Args[0] + " config")
 }
 
@@ -181,6 +195,9 @@ func main() {
 		} else if os.Args[1] == "down" {
 			connectDav()
 			downloadLatestFile()
+		} else if os.Args[1] == "list" {
+			connectDav()
+			list()
 		} else {
 			usage()
 		}
